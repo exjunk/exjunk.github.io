@@ -1,11 +1,4 @@
----
-title: "Privacy Policy"
-layout: "page"
-url: "/privacy/"
-summary: "Privacy policy for Android Tech Blog"
----
-
-**Last Updated:** [Current Date]
+**Last Updated:** 5th Nov 2025
 
 ## Introduction
 
