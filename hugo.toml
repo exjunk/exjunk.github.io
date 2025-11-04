@@ -1,0 +1,5 @@
+baseURL = "https://exjunk.github.io/"
+title = "Android Tech Blog"
+theme = "PaperMod"
+languageCode = "en-us"
+papersize = 10
