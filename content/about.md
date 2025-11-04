@@ -45,4 +45,4 @@ I'm always interested in connecting with fellow developers and tech enthusiasts.
 
 ---
 
-*Thanks for visiting my blog. Happy coding! 🚀*
+*Thanks for visiting my blog. Happy coding!
