@@ -2,17 +2,40 @@ baseURL = "https://blog.androiddevapps.com/"
 title = "Android Tech Blog"
 theme = "PaperMod"
 languageCode = "en-us"
-papersize = 10
 
-[params.footer]
-  [[params.footer.links]]
+[menu]
+  [[menu.main]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 5
+
+  [[menu.main]]
+    identifier = "about"
     name = "About"
     url = "/about/"
-  
-  [[params.footer.links]]
+    weight = 10
+
+  [[menu.main]]
+    identifier = "contact"
     name = "Contact"
     url = "/contact/"
-  
-  [[params.footer.links]]
-    name = "Privacy Policy"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/archives/"
+    weight = 25
+
+  [[menu.main]]
+    identifier = "privacy"
+    name = "Privacy"
     url = "/privacy/"
+    weight = 30
+
+[params]
+  ShowShareButtons = true
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
