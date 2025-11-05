@@ -2,7 +2,7 @@ baseURL = "https://blog.androiddevapps.com/"
 title = "Android Tech Blog"
 theme = "PaperMod"
 languageCode = "en-us"
-googleAnalytics = "G-YWVSDJ8DST"
+
 
 [menu]
   [[menu.main]]
@@ -35,5 +35,9 @@ googleAnalytics = "G-YWVSDJ8DST"
   ShowReadingTime = true
   ShowPostNavLinks = true
   ShowBreadCrumbs = true
+  
+[services]
+  [services.googleAnalytics]
+    ID = "G-YWVSDJ8DST"
   
   
