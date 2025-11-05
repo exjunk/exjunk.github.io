@@ -11,6 +11,12 @@
     <loc>http://localhost:1313/posts/</loc>
     <lastmod>2025-11-04T16:37:33+05:30</lastmod>
   </url><url>
+    <loc>http://localhost:1313/about/</loc>
+  </url><url>
+    <loc>http://localhost:1313/contact/</loc>
+  </url><url>
+    <loc>http://localhost:1313/privacy/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>

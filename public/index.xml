@@ -15,5 +15,72 @@
       <guid>http://localhost:1313/posts/first-post/</guid>
       <description></description>
     </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;h2 id=&#34;hi-im-ashish&#34;&gt;Hi, I&amp;rsquo;m Ashish&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;m an Android developer passionate about building beautiful, performant mobile applications. Welcome to my tech blog where I share my journey, insights, and knowledge about Android development.&lt;/p&gt;
+&lt;h3 id=&#34;my-journey&#34;&gt;My Journey&lt;/h3&gt;
+&lt;p&gt;I started my Android development journey in 2014 and have since worked on multiple apps that have been downloaded by millions of users worldwide. My focus areas include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Android Development:&lt;/strong&gt; Kotlin, Jetpack Compose, MVVM Architecture,MVP architecture&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Performance Optimization:&lt;/strong&gt; Making apps faster and more efficient&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UI/UX Design:&lt;/strong&gt; Creating delightful user experiences&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Modern Android:&lt;/strong&gt; Material Design 3, Compose, Coroutines, Flow etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;professional-background&#34;&gt;Professional Background&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Currently working as Senior Software Engineer at Rediff.com&lt;/li&gt;
+&lt;li&gt;11 years of experience in Android development&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-i-write-about&#34;&gt;What I Write About&lt;/h3&gt;
+&lt;p&gt;On this blog, you&amp;rsquo;ll find:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/contact/</guid>
+      <description>&lt;h2 id=&#34;get-in-touch&#34;&gt;Get in Touch&lt;/h2&gt;
+&lt;p&gt;I&amp;rsquo;d love to hear from you! Whether you have a question, feedback, or just want to say hello, feel free to reach out.&lt;/p&gt;
+&lt;h3 id=&#34;contact-information&#34;&gt;Contact Information&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Email:&lt;/strong&gt; &lt;a href=&#34;mailto:hello@androiddevapps.com&#34;&gt;hello@androiddevapps.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;X/Twitter:&lt;/strong&gt; &lt;a href=&#34;https://x.com/androiddevapps&#34;&gt;@androiddevapps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;LinkedIn:&lt;/strong&gt; &lt;a href=&#34;https://www.linkedin.com/in/ashish-singh-0119/&#34;&gt;androiddevapps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GitHub:&lt;/strong&gt; &lt;a href=&#34;https://github.com/exjunk&#34;&gt;@exjunk&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;what-i-can-help-with&#34;&gt;What I Can Help With&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Android development questions&lt;/li&gt;
+&lt;li&gt;Technical collaboration&lt;/li&gt;
+&lt;li&gt;Speaking opportunities&lt;/li&gt;
+&lt;li&gt;Guest post submissions&lt;/li&gt;
+&lt;li&gt;General inquiries&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;response-time&#34;&gt;Response Time&lt;/h3&gt;
+&lt;p&gt;I typically respond to emails within 24-48 hours on weekdays. For urgent matters, please mention &amp;ldquo;URGENT&amp;rdquo; in your subject line.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/privacy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/privacy/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;Last Updated:&lt;/strong&gt; 5th Nov 2025&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Your privacy is important to us. This Privacy Policy explains how Android Tech Blog (&amp;ldquo;we,&amp;rdquo; &amp;ldquo;our,&amp;rdquo; or &amp;ldquo;us&amp;rdquo;) collects, uses, and protects your information when you visit our website.&lt;/p&gt;
+&lt;h2 id=&#34;information-we-collect&#34;&gt;Information We Collect&lt;/h2&gt;
+&lt;h3 id=&#34;automatically-collected-information&#34;&gt;Automatically Collected Information&lt;/h3&gt;
+&lt;p&gt;When you visit our blog, we may automatically collect:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Log Data:&lt;/strong&gt; IP address, browser type, operating system, referring URLs, pages viewed, and timestamps&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cookies:&lt;/strong&gt; Small data files stored on your device to enhance your browsing experience&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Analytics Data:&lt;/strong&gt; Information about how you interact with our site through analytics services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;information-you-provide&#34;&gt;Information You Provide&lt;/h3&gt;
+&lt;p&gt;We may collect information you voluntarily provide, such as:&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
