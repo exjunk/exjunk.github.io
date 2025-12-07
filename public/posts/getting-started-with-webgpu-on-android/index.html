@@ -144,17 +144,17 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 <h2 id="what-is-webgpu">What is WebGPU?<a hidden class="anchor" aria-hidden="true" href="#what-is-webgpu">#</a></h2>
 <p>Before diving into the code, let’s understand what WebGPU actually is. Think of your phone’s GPU (Graphics Processing Unit) as a powerful calculator that specializes in graphics operations. WebGPU is a modern interface that lets developers communicate with this GPU efficiently. It’s designed to be faster and more flexible than older technologies like OpenGL ES, which has been the standard for Android graphics for years.</p>
 <p>The beauty of WebGPU is that it provides a unified way to work with graphics across different platforms, whether you’re building for web, Android, or desktop applications.</p>
-<p>WebGPU: From Web to Native Android</p>
+<p><strong>WebGPU: From Web to Native Android</strong></p>
 <p>WebGPU originated as a web standard for modern GPU access in browsers like Chrome and Edge, built on Google’s Dawn implementation. Dawn translates WebGPU calls into native graphics APIs: Vulkan on Android, Metal on iOS, and Direct3D on Windows. Google introduced the AndroidX WebGPU library, bringing this same powerful API to native Android development. The library packages Dawn into native ‘.so’ files and provides a Kotlin-friendly interface, meaning graphics code can now be shared between web and Android apps with minimal changes. This makes WebGPU an exciting choice for developers building cross-platform graphics applications.</p>
-<p>Understanding the Graphics Pipeline</p>
+<p><strong>Understanding the Graphics Pipeline</strong></p>
 <p>When you want to draw something on screen, like a triangle, the process happens in stages, similar to an assembly line in a factory. This is called the graphics pipeline.</p>
 <p>The pipeline has several key stages, but we’ll focus on two main ones:</p>
-<p>Vertex Stage: This is where you define the positions of your shapes. Think of vertices as the corner points of your triangle. You tell the GPU, “I want a triangle with three points at these specific locations on the screen.”</p>
-<p>Fragment Stage: After the GPU knows where your triangle is, it needs to know what color to paint it. The fragment stage is where you decide the color and appearance of every pixel inside your triangle. You can think of it as the painting stage after you’ve drawn the outline.</p>
+<p><strong>Vertex Stage</strong>: This is where you define the positions of your shapes. Think of vertices as the corner points of your triangle. You tell the GPU, “I want a triangle with three points at these specific locations on the screen.”</p>
+<p><strong>Fragment Stage</strong>: After the GPU knows where your triangle is, it needs to know what color to paint it. The fragment stage is where you decide the color and appearance of every pixel inside your triangle. You can think of it as the painting stage after you’ve drawn the outline.</p>
 <p>These stages are controlled by small programs called shaders, which are written in a special language. Don’t worry if this sounds complex; we’ll break it down step by step.</p>
 <h2 id="project-setup">Project Setup<a hidden class="anchor" aria-hidden="true" href="#project-setup">#</a></h2>
 <p>Let’s start by setting up a new Android project. You can use Android Studio to create a standard Compose project. Make sure you’re targeting at least API level 24 (Android 7.0).</p>
-<p>Step 1: Configuring Your Build File</p>
+<p><strong>Step 1: Configuring Your Build File</strong></p>
 <p>Open your app-level build.gradle.kts file and add the WebGPU library. This file tells Android Studio which external libraries your app needs.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span>dependencies {
 </span></span><span style="display:flex;"><span>    implementation(<span style="color:#e6db74">&#34;androidx.webgpu:webgpu:1.0.0-alpha01&#34;</span>)
@@ -200,7 +200,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
   │   └── libwebgpu_c_bundled.so
   └── x86_64/
       └── libwebgpu_c_bundled.so
-</code></pre><p>Step 3: Organizing the Native Libraries</p>
+</code></pre><p><strong>Step 3: Organizing the Native Libraries</strong></p>
 <p>In your Android project, create a folder structure to house these native libraries. Navigate to your project and create the following path</p>
 <pre tabindex="0"><code>app/src/main/jniLibs/
 </code></pre><p>Note the capital ‘L’ in jniLibs. This naming is important because Android Studio looks for native libraries specifically in a folder with this exact name.</p>
@@ -222,7 +222,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </code></pre><p>When you build your app, Android will automatically select the correct .so file based on the device&rsquo;s processor architecture. You don&rsquo;t need to write any code to handle this selection.</p>
 <h3 id="creating-the-renderer">Creating the Renderer<a hidden class="anchor" aria-hidden="true" href="#creating-the-renderer">#</a></h3>
 <p>Now comes the exciting part: writing code to actually render graphics. We’ll create a class called WebGPURenderer that manages all GPU operations.</p>
-<p>Understanding the Renderer Structure</p>
+<p><strong>Understanding the Renderer Structure</strong></p>
 <p>The renderer needs to handle several responsibilities:</p>
 <ol>
 <li>Load the native library</li>
@@ -232,7 +232,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 <li>Execute the rendering loop</li>
 </ol>
 <p>Let’s build this step by step.</p>
-<p>Loading the Native Library</p>
+<p><strong>Loading the Native Library</strong></p>
 <p>First, we need to load the native library we placed in the jniLibs folder. This happens in a companion object, which runs when the class is first used</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">WebGPURenderer</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">companion</span> <span style="color:#66d9ef">object</span> {
@@ -247,7 +247,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Notice how we use &ldquo;webgpu_c_bundled&rdquo; and not &ldquo;libwebgpu_c_bundled&rdquo;. Android automatically adds the lib prefix and .so extension, so we only need to provide the middle part of the filename.</p>
-<p>Initializing the GPU</p>
+<p><strong>Initializing the GPU</strong></p>
 <p>To use the GPU, we need to go through an initialization sequence. Think of this as introducing yourself to the GPU and getting permission to use it</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> gpuInstance: GPUInstance? = <span style="color:#66d9ef">null</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">var</span> adapter: GPUAdapter? = <span style="color:#66d9ef">null</span>
@@ -271,10 +271,10 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let me break down what’s happening here:</p>
-<p>GPUInstance: This is your entry point to WebGPU. It’s like opening the door to the GPU world.</p>
-<p>Adapter: This represents your actual GPU hardware. A device might have multiple GPUs (like integrated and dedicated graphics cards on laptops), and the adapter lets you choose which one to use.</p>
-<p>Device: This is your connection to the GPU. Once you have a device, you can send commands to the GPU, create resources, and render graphics.</p>
-<p>Understanding Shaders</p>
+<p><strong>GPUInstance</strong> :  This is your entry point to WebGPU. It’s like opening the door to the GPU world.**</p>
+<p><strong>Adapter</strong> : This represents your actual GPU hardware. A device might have multiple GPUs (like integrated and dedicated graphics cards on laptops), and the adapter lets you choose which one to use.</p>
+<p><strong>Device</strong> : This is your connection to the GPU. Once you have a device, you can send commands to the GPU, create resources, and render graphics.</p>
+<p><strong>Understanding Shaders</strong></p>
 <p>Before we create our rendering pipeline, we need to write shaders. Remember how I mentioned shaders earlier? They’re small programs that run on the GPU. Here’s a simple shader that draws a red triangle</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">val</span> shaderCode = <span style="color:#e6db74">&#34;&#34;&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    @vertex fn vertexMain(@builtin(vertex_index) i : u32) -&gt;
@@ -287,14 +287,14 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    }
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>.trimIndent()
 </span></span></code></pre></div><p>This might look intimidating, but let’s decode it piece by piece.</p>
-<p>The Vertex Shader (vertexMain):</p>
+<p><strong>The Vertex Shader (vertexMain):</strong></p>
 <ul>
 <li>It receives a vertex index (0, 1, or 2 for our three triangle corners)</li>
 <li>It defines three positions: top-middle (0, 1), bottom-left (-1, -1), and bottom-right (1, -1)</li>
 <li>These coordinates use a system where (0, 0) is the center of your screen, (-1, -1) is the bottom-left corner, and (1, 1) is the top-right corner</li>
 <li>It returns vec4f(pos[i], 0, 1) which means &ldquo;use this 2D position, with a depth of 0 and a special coordinate of 1&rdquo;</li>
 </ul>
-<p>The Fragment Shader (fragmentMain):</p>
+<p><strong>The Fragment Shader (fragmentMain):</strong></p>
 <ul>
 <li>This is even simpler</li>
 <li>It returns vec4f(1, 0, 0, 1) which represents a color</li>
@@ -302,7 +302,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 <li>(1, 0, 0, 1) means full red, no green, no blue, and fully opaque</li>
 <li>If you wanted a blue triangle, you’d change it to vec4f(0, 0, 1, 1)</li>
 </ul>
-<p>Creating the Surface</p>
+<p><strong>Creating the Surface</strong></p>
 <p>A surface is where your rendered graphics actually appear. Think of it as the canvas on which the GPU paints</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createSurface</span>(nativeSurface: Surface, width: Int, height: Int) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!is</span>Initialized) <span style="color:#66d9ef">return</span>
@@ -323,7 +323,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The Util.windowFromSurface() method converts Android's Surface object into a format that WebGPU understands. This is the bridge between Android's view system and WebGPU's rendering system.</p>
-<p>Configuring the Surface</p>
+<p><strong>Configuring the Surface</strong></p>
 <p>Once we have a surface, we need to configure it with the right settings</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">configureSurface</span>(width: Int, height: Int) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> currentSurface = surface <span style="color:#f92672">?:</span> <span style="color:#66d9ef">return</span>
@@ -342,7 +342,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    currentSurface.configure(surfaceConfiguration)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The texture format determines how color information is stored in memory. Different devices support different formats, so we ask the GPU what formats it supports and pick the first one.</p>
-<p>Creating the Render Pipeline</p>
+<p><strong>Creating the Render Pipeline</strong></p>
 <p>The render pipeline is like a recipe that tells the GPU how to process your graphics commands. It connects your shaders together and sets up all the rules for rendering</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">createRenderPipeline</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> currentDevice = device <span style="color:#f92672">?:</span> <span style="color:#66d9ef">return</span>
@@ -379,7 +379,7 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The entry points (&ldquo;vertexMain&rdquo; and &ldquo;fragmentMain&rdquo;) tell WebGPU which functions in your shader code to use for each stage of the pipeline.</p>
-<p>The Render Loop</p>
+<p><strong>The Render Loop</strong></p>
 <p>Finally, we need to actually draw something. The render function executes every frame (ideally 60 times per second)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#66d9ef">fun</span> <span style="color:#a6e22e">render</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> currentSurface = surface <span style="color:#f92672">?:</span> <span style="color:#66d9ef">return</span>
@@ -418,11 +418,11 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let’s understand what each part does:</p>
-<p>clearValue: This is the background color. We set it to a pleasant blue (0.2, 0.3, 0.5, 1.0).</p>
-<p>CommandEncoder: Instead of sending commands to the GPU one at a time, we record them into a command buffer. This is more efficient.</p>
-<p>RenderPassEncoder: This represents one rendering operation. We tell it to use our pipeline and draw 3 vertices (our triangle’s three corners).</p>
-<p>queue.submit: This sends all our recorded commands to the GPU at once.</p>
-<p>present: This displays the rendered result on screen.</p>
+<p><strong>clearValue</strong>: This is the background color. We set it to a pleasant blue (0.2, 0.3, 0.5, 1.0).</p>
+<p><strong>CommandEncoder</strong>: Instead of sending commands to the GPU one at a time, we record them into a command buffer. This is more efficient.</p>
+<p><strong>RenderPassEncoder</strong>: This represents one rendering operation. We tell it to use our pipeline and draw 3 vertices (our triangle’s three corners).</p>
+<p><strong>queue.submit</strong>: This sends all our recorded commands to the GPU at once.</p>
+<p><strong>present</strong>: This displays the rendered result on screen.</p>
 <h3 id="integrating-with-jetpack-compose">Integrating with Jetpack Compose<a hidden class="anchor" aria-hidden="true" href="#integrating-with-jetpack-compose">#</a></h3>
 <p>Now that we have our renderer, we need to integrate it with Android’s UI system. We’ll use Jetpack Compose, Android’s modern UI toolkit:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-kotlin" data-lang="kotlin"><span style="display:flex;"><span><span style="color:#a6e22e">@Composable</span>
@@ -516,9 +516,9 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 </span></span></code></pre></div><h3 id="final-result">Final Result<a hidden class="anchor" aria-hidden="true" href="#final-result">#</a></h3>
 <p><img alt="image" loading="lazy" src="https://miro.medium.com/v2/resize:fit:1400/1*bRkeaVZjnp__onOJKQUiRQ.png"></p>
 <h2 id="common-issues-and-solutions">Common Issues and Solutions<a hidden class="anchor" aria-hidden="true" href="#common-issues-and-solutions">#</a></h2>
-<p>Black Screen: Make sure the surface dimensions are valid. Add logging to check if initialization completed successfully.</p>
-<p>Library Not Found: Verify that your .so files are in the correct folders and that the folder is named jniLibs with a capital &lsquo;L&rsquo;.</p>
-<p>Crashes on Startup: Ensure you’re testing on a device or emulator that supports Vulkan. WebGPU on Android uses Vulkan underneath, so older devices might not work.</p>
+<p><strong>Black Screen</strong>: Make sure the surface dimensions are valid. Add logging to check if initialization completed successfully.</p>
+<p><strong>Library Not Found</strong>: Verify that your .so files are in the correct folders and that the folder is named jniLibs with a capital &lsquo;L&rsquo;.</p>
+<p><strong>Crashes on Startup</strong>: Ensure you’re testing on a device or emulator that supports Vulkan. WebGPU on Android uses Vulkan underneath, so older devices might not work.</p>
 <h2 id="whats-next">What’s Next?<a hidden class="anchor" aria-hidden="true" href="#whats-next">#</a></h2>
 <p>You’ve successfully rendered your first WebGPU graphics on Android. From here, you can explore:</p>
 <ul>

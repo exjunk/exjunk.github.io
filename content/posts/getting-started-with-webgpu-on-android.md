@@ -14,19 +14,19 @@ Before diving into the code, let’s understand what WebGPU actually is. Think o
 
 The beauty of WebGPU is that it provides a unified way to work with graphics across different platforms, whether you’re building for web, Android, or desktop applications.
 
-WebGPU: From Web to Native Android
+**WebGPU: From Web to Native Android**
 
 WebGPU originated as a web standard for modern GPU access in browsers like Chrome and Edge, built on Google’s Dawn implementation. Dawn translates WebGPU calls into native graphics APIs: Vulkan on Android, Metal on iOS, and Direct3D on Windows. Google introduced the AndroidX WebGPU library, bringing this same powerful API to native Android development. The library packages Dawn into native ‘.so’ files and provides a Kotlin-friendly interface, meaning graphics code can now be shared between web and Android apps with minimal changes. This makes WebGPU an exciting choice for developers building cross-platform graphics applications.
 
-Understanding the Graphics Pipeline
+**Understanding the Graphics Pipeline**
 
 When you want to draw something on screen, like a triangle, the process happens in stages, similar to an assembly line in a factory. This is called the graphics pipeline.
 
 The pipeline has several key stages, but we’ll focus on two main ones:
 
-Vertex Stage: This is where you define the positions of your shapes. Think of vertices as the corner points of your triangle. You tell the GPU, “I want a triangle with three points at these specific locations on the screen.”
+**Vertex Stage**: This is where you define the positions of your shapes. Think of vertices as the corner points of your triangle. You tell the GPU, “I want a triangle with three points at these specific locations on the screen.”
 
-Fragment Stage: After the GPU knows where your triangle is, it needs to know what color to paint it. The fragment stage is where you decide the color and appearance of every pixel inside your triangle. You can think of it as the painting stage after you’ve drawn the outline.
+**Fragment Stage**: After the GPU knows where your triangle is, it needs to know what color to paint it. The fragment stage is where you decide the color and appearance of every pixel inside your triangle. You can think of it as the painting stage after you’ve drawn the outline.
 
 These stages are controlled by small programs called shaders, which are written in a special language. Don’t worry if this sounds complex; we’ll break it down step by step.
 
@@ -34,7 +34,7 @@ These stages are controlled by small programs called shaders, which are written 
 
 Let’s start by setting up a new Android project. You can use Android Studio to create a standard Compose project. Make sure you’re targeting at least API level 24 (Android 7.0).
 
-Step 1: Configuring Your Build File
+**Step 1: Configuring Your Build File**
 
 Open your app-level build.gradle.kts file and add the WebGPU library. This file tells Android Studio which external libraries your app needs.
 
@@ -96,7 +96,7 @@ jni/
       └── libwebgpu_c_bundled.so
 ```
 
-Step 3: Organizing the Native Libraries
+**Step 3: Organizing the Native Libraries**
 
 In your Android project, create a folder structure to house these native libraries. Navigate to your project and create the following path
 
@@ -131,7 +131,7 @@ When you build your app, Android will automatically select the correct .so file 
 
 Now comes the exciting part: writing code to actually render graphics. We’ll create a class called WebGPURenderer that manages all GPU operations.
 
-Understanding the Renderer Structure
+**Understanding the Renderer Structure**
 
 The renderer needs to handle several responsibilities:
 
@@ -143,7 +143,7 @@ The renderer needs to handle several responsibilities:
 
 Let’s build this step by step.
 
-Loading the Native Library
+**Loading the Native Library**
 
 First, we need to load the native library we placed in the jniLibs folder. This happens in a companion object, which runs when the class is first used
 
@@ -164,7 +164,7 @@ class WebGPURenderer {
 
 Notice how we use "webgpu_c_bundled" and not "libwebgpu_c_bundled". Android automatically adds the lib prefix and .so extension, so we only need to provide the middle part of the filename.
 
-Initializing the GPU
+**Initializing the GPU**
 
 To use the GPU, we need to go through an initialization sequence. Think of this as introducing yourself to the GPU and getting permission to use it
 
@@ -194,13 +194,13 @@ suspend fun initialize() {
 
 Let me break down what’s happening here:
 
-GPUInstance: This is your entry point to WebGPU. It’s like opening the door to the GPU world.
+**GPUInstance** :  This is your entry point to WebGPU. It’s like opening the door to the GPU world.**
 
-Adapter: This represents your actual GPU hardware. A device might have multiple GPUs (like integrated and dedicated graphics cards on laptops), and the adapter lets you choose which one to use.
+**Adapter** : This represents your actual GPU hardware. A device might have multiple GPUs (like integrated and dedicated graphics cards on laptops), and the adapter lets you choose which one to use.
 
-Device: This is your connection to the GPU. Once you have a device, you can send commands to the GPU, create resources, and render graphics.
+**Device** : This is your connection to the GPU. Once you have a device, you can send commands to the GPU, create resources, and render graphics.
 
-Understanding Shaders
+**Understanding Shaders**
 
 Before we create our rendering pipeline, we need to write shaders. Remember how I mentioned shaders earlier? They’re small programs that run on the GPU. Here’s a simple shader that draws a red triangle
 
@@ -219,14 +219,14 @@ private val shaderCode = """
 
 This might look intimidating, but let’s decode it piece by piece.
 
-The Vertex Shader (vertexMain):
+**The Vertex Shader (vertexMain):**
 
 - It receives a vertex index (0, 1, or 2 for our three triangle corners)
 - It defines three positions: top-middle (0, 1), bottom-left (-1, -1), and bottom-right (1, -1)
 - These coordinates use a system where (0, 0) is the center of your screen, (-1, -1) is the bottom-left corner, and (1, 1) is the top-right corner
 - It returns vec4f(pos[i], 0, 1) which means "use this 2D position, with a depth of 0 and a special coordinate of 1"
 
-The Fragment Shader (fragmentMain):
+**The Fragment Shader (fragmentMain):**
 
 - This is even simpler
 - It returns vec4f(1, 0, 0, 1) which represents a color
@@ -234,7 +234,7 @@ The Fragment Shader (fragmentMain):
 - (1, 0, 0, 1) means full red, no green, no blue, and fully opaque
 - If you wanted a blue triangle, you’d change it to vec4f(0, 0, 1, 1)
 
-Creating the Surface
+**Creating the Surface**
 
 A surface is where your rendered graphics actually appear. Think of it as the canvas on which the GPU paints
 
@@ -261,7 +261,7 @@ fun createSurface(nativeSurface: Surface, width: Int, height: Int) {
 
 The Util.windowFromSurface() method converts Android\'s Surface object into a format that WebGPU understands. This is the bridge between Android\'s view system and WebGPU\'s rendering system.
 
-Configuring the Surface
+**Configuring the Surface**
 
 Once we have a surface, we need to configure it with the right settings
 
@@ -286,7 +286,7 @@ private fun configureSurface(width: Int, height: Int) {
 
 The texture format determines how color information is stored in memory. Different devices support different formats, so we ask the GPU what formats it supports and pick the first one.
 
-Creating the Render Pipeline
+**Creating the Render Pipeline**
 
 The render pipeline is like a recipe that tells the GPU how to process your graphics commands. It connects your shaders together and sets up all the rules for rendering
 
@@ -329,7 +329,7 @@ private fun createRenderPipeline() {
 
 The entry points ("vertexMain" and "fragmentMain") tell WebGPU which functions in your shader code to use for each stage of the pipeline.
 
-The Render Loop
+**The Render Loop**
 
 Finally, we need to actually draw something. The render function executes every frame (ideally 60 times per second)
 
@@ -374,15 +374,15 @@ fun render() {
 
 Let’s understand what each part does:
 
-clearValue: This is the background color. We set it to a pleasant blue (0.2, 0.3, 0.5, 1.0).
+**clearValue**: This is the background color. We set it to a pleasant blue (0.2, 0.3, 0.5, 1.0).
 
-CommandEncoder: Instead of sending commands to the GPU one at a time, we record them into a command buffer. This is more efficient.
+**CommandEncoder**: Instead of sending commands to the GPU one at a time, we record them into a command buffer. This is more efficient.
 
-RenderPassEncoder: This represents one rendering operation. We tell it to use our pipeline and draw 3 vertices (our triangle’s three corners).
+**RenderPassEncoder**: This represents one rendering operation. We tell it to use our pipeline and draw 3 vertices (our triangle’s three corners).
 
-queue.submit: This sends all our recorded commands to the GPU at once.
+**queue.submit**: This sends all our recorded commands to the GPU at once.
 
-present: This displays the rendered result on screen.
+**present**: This displays the rendered result on screen.
 
 ### Integrating with Jetpack Compose
 
@@ -491,11 +491,11 @@ class MainActivity : ComponentActivity() {
 
 ## Common Issues and Solutions
 
-Black Screen: Make sure the surface dimensions are valid. Add logging to check if initialization completed successfully.
+**Black Screen**: Make sure the surface dimensions are valid. Add logging to check if initialization completed successfully.
 
-Library Not Found: Verify that your .so files are in the correct folders and that the folder is named jniLibs with a capital 'L'.
+**Library Not Found**: Verify that your .so files are in the correct folders and that the folder is named jniLibs with a capital 'L'.
 
-Crashes on Startup: Ensure you’re testing on a device or emulator that supports Vulkan. WebGPU on Android uses Vulkan underneath, so older devices might not work.
+**Crashes on Startup**: Ensure you’re testing on a device or emulator that supports Vulkan. WebGPU on Android uses Vulkan underneath, so older devices might not work.
 
 ## What’s Next?
 
