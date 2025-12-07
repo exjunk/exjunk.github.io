@@ -8,6 +8,9 @@ title = 'Getting Started with WebGPU on Android: A Complete Guide'
 
 WebGPU is the next-generation graphics API that brings modern GPU capabilities to the web and native applications. While it’s primarily known for web browsers, Google has been working on bringing WebGPU to Android through the AndroidX library. In this guide, we’ll walk through setting up WebGPU in your Android app and rendering your first triangle.
 
+
+[Link to the complete code](https://gist.github.com/exjunk/3fba39e6b40dbf25a2711d581e39bf6e)
+
 ## What is WebGPU?
 
 Before diving into the code, let’s understand what WebGPU actually is. Think of your phone’s GPU (Graphics Processing Unit) as a powerful calculator that specializes in graphics operations. WebGPU is a modern interface that lets developers communicate with this GPU efficiently. It’s designed to be faster and more flexible than older technologies like OpenGL ES, which has been the standard for Android graphics for years.
@@ -510,9 +513,6 @@ You’ve successfully rendered your first WebGPU graphics on Android. From here,
 WebGPU is a powerful technology that opens up many possibilities for graphics programming on Android. The concepts you’ve learned here, especially the graphics pipeline and shaders, are fundamental to all modern graphics programming.
 
 Remember that graphics programming has a learning curve, but each concept builds on the previous one. Take your time to understand each part, experiment with the code, and don’t be afraid to make mistakes. That’s how you learn.
-
-
-[Link to the complete code](https://gist.github.com/exjunk/3fba39e6b40dbf25a2711d581e39bf6e)
 
 Happy rendering!
 
