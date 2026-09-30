@@ -2,6 +2,9 @@
 date = '2026-09-30T09:00:00+05:30'
 draft = false
 title = 'Hisaab — Privacy Policy'
+# A legal page, not a blog post: reachable by URL, absent from lists and the RSS feed.
+[_build]
+  list = 'never'
 +++
 
 **Last updated:** 30 September 2026

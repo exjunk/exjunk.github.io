@@ -31,6 +31,10 @@ languageCode = "en-us"
     weight = 30
 
 [params]
+  # Pin the blog listing to content/posts. Without this Hugo auto-detects the section
+  # with the most pages, so adding any other top-level section can silently replace the
+  # home page's post list.
+  mainSections = ["posts"]
   ShowShareButtons = false
   ShowReadingTime = true
   ShowPostNavLinks = true
